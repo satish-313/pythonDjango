@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>list added</title>
+    </head>
+    <body>
+        <h1>list Names</h1>
+         <ul>
+            {% for listItem in list %}
+                <li>
+                    <a href="{% url 'listItem' listItem.id %}">
+                        {{listItem}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'index' %}">adding</a>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>list items</title>
+    </head>
+    <body>
+        <p>{{content}}</p>
+        <!--<p>{{idNumber}}</p>-->
+        <a href="{% url 'update' idNumber %}">update page</a><br>
+        <a href="{% url 'delete' idNumber %}">delete page</a><br>
+        <a href="{% url 'list' %}">list page</a>
+    </body>
+</html>

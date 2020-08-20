@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>update page</title>
+    </head>
+    <body>
+        <p>{{updateid}}</p>
+        <form action="{% url 'update' updateid %}" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <input type="text" name="update" placeholder="update the task">
+            <input type="submit">
+        </form>
+        <a href="{% url 'list' %}">all list page</a>
+    </body>
+</html>

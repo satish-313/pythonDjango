@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>add page</title>
+    </head>
+    <body>
+        <form action="{% url 'index' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="name" autocomplete="off">
+            <input type="submit">
+        </form>
+        <a href="{% url 'list' %}">list added</a>
+    </body>
+</html>
