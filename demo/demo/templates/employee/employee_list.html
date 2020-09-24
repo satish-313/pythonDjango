@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+employee list
+{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-aqua w3-margin">
+    <h3>Employee lists</h3>
+    <ul>
+        {% for user in users %}
+        <li>
+            <a href="{% url 'employee_detail' user.id %}">{{user.username}} : {{user.first_name}} {{user.last_name}}</a>
+        </li>
+        {% empty %}
+        <p>No employee is added</p>
+        {% endfor %}
+    </ul>
+    <p>for adding employee <a href="{% url 'employee_add' %}">click here!</a></p>
+</div>
+{% endblock %}

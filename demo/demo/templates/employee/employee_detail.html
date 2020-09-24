@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{user.first_name}} detail
+{% endblock%}
+
+{% block content %}
+    <table>
+        <tr>
+            <td><label>first name : </label></td>
+            <td>{{user.first_name}}</td>
+        </tr>
+        <tr>
+            <td><label>last name : </label></td>
+            <td>{{user.last_name}}</td>
+        </tr>
+        <tr>
+            <td>username : </td>
+            <td>{{user.username}}</td>
+        </tr>
+        <tr>
+            <td>email : </td>
+            <td>{{user.email}}</td>
+        </tr>
+        <tr>
+            <td>password : </td>
+            <td>{{user.password}}</td>
+        </tr>
+    </table>
+    <p>for edit <a href="{% url 'employee_edit' user.id %}">click here!</a></p>
+    <p>for delete <a href="{% url 'employee_delete' user.id %}">click here!</a></p>
+{% endblock %}
