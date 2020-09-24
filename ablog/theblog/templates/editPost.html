@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    edit blog{{post.title_tag}}
+
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h1>Add post...</h1>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="btn btn-secondary">Update</button>
+        </form>
+    </div>
+{% else %}
+    <p>Login is required</p>
+    <a href="{% url 'login' %}">Login Page!</a>
+{% endif %}
+{% endblock %}
+
