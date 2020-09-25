@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ cats }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ cats }}</h1>
+
+<ul>
+    {% for post in category_post %}
+        <li> 
+            <a href="{% url 'home:detail' post.pk %}"> title :{{ post.title }}</a><br>Category <a href="{% url 'home:categoryViews' post.category %}">{{post.category}}</a><br>
+            author :  {{ post.author}}  
+            {% if user.is_authenticated %}
+                -<a href="{% url 'home:update' post.pk%}">edit</a>|| <a href="{% url 'home:delete' post.pk%}">delete</a> <br>
+            {% endif %}
+            content :{{ post.body|slice:"50"|safe }}
+        </li>
+    {% empty %}
+        <p>No blog is post on tag of {{cats}}</p>
+    {% endfor %}
+</ul>
+
+{% endblock %}

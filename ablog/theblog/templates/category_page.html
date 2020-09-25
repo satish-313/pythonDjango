@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    category tags
+{% endblock %}
+
+{% block content %}
+<h1>Categories</h1>
+<ul>
+    {% for cats in object_list %}
+        <li> 
+            <a href="{% url 'home:categoryViews' cats.name|slugify %}">{{cats.name}}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

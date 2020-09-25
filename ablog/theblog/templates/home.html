@@ -9,7 +9,7 @@
 <ul>
     {% for post in object_list %}
         <li> 
-        <a href="{% url 'home:detail' post.pk %}"> title :{{ post.title }}</a><br>
+        <a href="{% url 'home:detail' post.pk %}"> title :{{ post.title }}</a><br>Category <a href="{% url 'home:categoryViews' post.category|slugify %}">{{post.category}}</a><br>
         author :  {{ post.author}}  
         {% if user.is_authenticated %}
              -<a href="{% url 'home:update' post.pk%}">edit</a>|| <a href="{% url 'home:delete' post.pk%}">delete</a> <br>
