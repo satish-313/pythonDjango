@@ -2,19 +2,21 @@
 
 {% block title %}
     edit blog{{post.title_tag}}
-
 {% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.id == post.author.id %}
     <h1>Add post...</h1>
     <div class="form-group">
         <form method="POST">
             {% csrf_token %}
+            {{form.media}}
             {{form.as_p}}
             <button class="btn btn-secondary">Update</button>
         </form>
     </div>
+{% elif user.is_authenticated %}
+    <p>You are denial edit these post</p>
 {% else %}
     <p>Login is required</p>
     <a href="{% url 'login' %}">Login Page!</a>

@@ -11,9 +11,29 @@
     <hr>
     {{ post.body|safe }}
     <br><br>
+    {% if user.is_authenticated %}
+        <form action="{% url 'home:like_post' post.pk %}" method="POST">
+            {% csrf_token %}
+            {% if liked %}
+                <button type="submit" name="postLike" value="{{ post.pk }}" class="btn btn-primary">Unlikes</button> {{likes}} likes
+            {% else %}
+                <button type="submit" name="postLike" value="{{ post.pk }}" class="btn btn-secondary">Likes</button> {{likes}} likes
+            {% endif %}
+        </form>
+    {% else %}
+        <button id="click" class="btn btn-secondary">Likes</button> {{likes}} likes
+        <a style="display: none;" href="{% url 'login' %}" id="signUpButton" class="btn btn-secondary">login needed for like</a>
+        <script>
+            function show() {
+                document.getElementById('signUpButton').style.display = "block";
+            }
+            document.getElementById('click').onclick = show
+        </script>
+    {% endif %}
+    <br><br>
     <a class="btn btn-secondary" href="{% url 'home:home' %}">home</a>
     <br><br>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user.id == post.author.id %}
         <a class="btn btn-secondary" href="{% url 'home:delete' post.id %}">Delete</a>
     {% endif %}
 {% endblock %}

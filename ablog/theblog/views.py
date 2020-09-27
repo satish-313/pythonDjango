@@ -1,11 +1,11 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render,get_object_or_404
+from django.urls import reverse_lazy,reverse
 from .models import Post,Category
 from .form import PostForm,editForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView,ListView,DetailView,CreateView,DeleteView
-
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -28,6 +28,18 @@ class HomeView(ListView):
 class ArticleDetailView(DetailView):
     model = Post
     template_name = 'article_detail.html'
+
+    def get_context_data(self, *args,**kwargs):
+        context = super(ArticleDetailView,self).get_context_data(*args,**kwargs)
+        like = get_object_or_404(Post,id=self.kwargs['pk'])
+        liked = False
+        if like.likes.filter(id=self.request.user.id).exists():
+            liked = True
+        likes = like.total_likes()
+        context['likes'] = likes
+        context['liked'] = liked
+        return context
+
 
 
 class AddPostView(CreateView):
@@ -60,3 +72,14 @@ def categoryViews(request,cats):
 class CategoryView(ListView):
     model = Category
     template_name = 'category_page.html'
+
+def likeView(request,pk):
+    post = get_object_or_404(Post, id=request.POST.get('postLike'))
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+    return HttpResponseRedirect(reverse("home:detail", args=(pk,)))
