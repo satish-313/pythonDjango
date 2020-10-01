@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    add post
+    create profile page
 {% endblock %}
 
 {% block content %}
@@ -17,10 +17,6 @@
         <br>
         <a class="btn btn-secondary" href="{% url 'home:home' %}">Home</a>
     </div>
-    <script>
-        let userid = "{{ user.id }}"
-        document.getElementById('Theuser').value = userid;
-    </script> 
 {% else %}
     <p>Login is required</p>
     <a href="{% url 'login' %}">Login Page!</a>

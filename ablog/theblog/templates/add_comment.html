@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    add comment
+{% endblock %}
+
+{% block content %}
+    <h1>Add comment...</h1>
+    <div class="form-group">
+        <form method="POST" >
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="btn btn-secondary">add comment</button>
+        </form>
+        <br>
+        <a class="btn btn-secondary" href="{% url 'home:home' %}">Home</a>
+    </div>
+{% endblock %}

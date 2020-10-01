@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.urls import reverse_lazy,reverse
-from .models import Post,Category
-from .form import PostForm,editForm
+from .models import Post,Category,Comment
+from .form import PostForm,editForm,AddCommentForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView,ListView,DetailView,CreateView,DeleteView
@@ -83,3 +83,19 @@ def likeView(request,pk):
         post.likes.add(request.user)
         liked = True
     return HttpResponseRedirect(reverse("home:detail", args=(pk,)))
+
+
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = AddCommentForm
+    #fields = '__all__'
+    template_name = 'add_comment.html'
+
+    def form_valid(self,form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
+
+    success_url = reverse_lazy('home:home')
+
+
+

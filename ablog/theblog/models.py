@@ -28,7 +28,7 @@ class Post(models.Model):
     snippet = models.CharField(max_length=300)
     #category = models.ForeignKey(Category,on_delete=models.CASCADE, default=2)
     likes = models.ManyToManyField(User, related_name="blog_post")
-
+    header_image = models.ImageField(null=True, blank=True , upload_to="image/")
 
 
 
@@ -40,4 +40,27 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("home:detail", args= (self.id,))
-        #return reverse('home')
+        #return reverse('home:home')
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    profile_pics = models.ImageField(null=True, blank=True , upload_to="image/profile/")
+    linkedin_url = models.CharField(max_length=255, null=True, blank=True)
+    bio = models.TextField()
+
+    def __str__(self):
+        return f"{self.user}"
+    
+    def get_absolute_url(self):
+    #return reverse("home:detail", args= (self.id,))
+        return reverse('home:home')
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post,related_name="comments", on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.post.title} , {self.name}"
+

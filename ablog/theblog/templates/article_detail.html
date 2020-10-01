@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
     {{post.title_tag}}
 {% endblock %}
@@ -9,6 +9,10 @@
     <small> by : {{ post.author}}</small><br>
     {{post.post_date}}
     <hr>
+    {% if post.header_image %}
+        <img src="{{ post.header_image.url }}">
+    {% endif %}
+    <br><br/>
     {{ post.body|safe }}
     <br><br>
     {% if user.is_authenticated %}
@@ -36,4 +40,41 @@
     {% if user.is_authenticated and user.id == post.author.id %}
         <a class="btn btn-secondary" href="{% url 'home:delete' post.id %}">Delete</a>
     {% endif %}
+    <p></p>
+    <hr>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            {% if post.author.profile.profile_pics %}
+                <img src="{{post.author.profile.profile_pics.url }}" style="width: 200px; height: 200px;" alt="Profile">
+            {% else %}
+                <img src="{% static 'blog/img/photo.png' %}" style="width: 200px; height: 200px;">
+            {% endif %}
+        </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Profile pics</h5><br>
+              <a href="{%url 'signup:show_profile_page' post.author.profile.id %}">profile page</a>
+              <p class="card-text">{{ post.author.profile.bio}}</p>
+              {% if post.author.profile.linkedin_url %}
+              <a class="card-text" href="{{post.author.profile.linkedin_url }}">linkedin</a></small></a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    <hr>
+    <h3>comments</h3>
+    {% if not post.comments.all %}
+        No comment yet.... <a href="{% url 'home:add_comment' post.pk %}">click here</a>
+    {% else %}
+        <a href="{% url 'home:add_comment' post.pk %}">add comment</a>
+        {% for comment in post.comments.all %}
+            <br>{{ comment.name}} - {{comment.date_added}}<br>
+            {{ comment.body }}
+        {% endfor %}
+    {% endif %}
+    <br/><br/>
+    <hr>
+  
 {% endblock %}

@@ -13,9 +13,10 @@
         author :  {{ post.author}}  
         {% if user.is_authenticated %}
             {% if user.id == post.author.id %}
-                 -<a href="{% url 'home:update' post.pk%}">edit</a>|| <a href="{% url 'home:delete' post.pk%}">delete</a> <br>
+                 -<a href="{% url 'home:update' post.pk%}">edit</a>|| <a href="{% url 'home:delete' post.pk%}">delete</a>
             {% endif %}
          {% endif %}
+            <br/>
             {{ post.snippet }}
 <!--         content :{{ post.body|slice:"50"|safe }}
  -->        </li>
